@@ -26,4 +26,9 @@ class Gym extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function brands()
+    {
+        return $this->hasMany(Brand::class);
+    }
 }

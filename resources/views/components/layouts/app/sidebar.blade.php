@@ -17,8 +17,8 @@
             [
                 'name' => 'Suplementos',
                 'icon' => 'beaker',
-                'url'  => route('admin.clients.index'),
-                'current' => request()->routeIs('clients.*')
+                'url'  => route('admin.brands.index'),
+                'current' => request()->routeIs('brands.*')
             ],
         ],
     ];
@@ -49,10 +49,22 @@
                 'url'  => route('admin.category_schedules.index'),
                 'current' => request()->routeIs('category_schedules.*')
             ],
+            [
+                'name' => 'Marca',
+                'icon' => 'clipboard-document-list',
+                'url'  => route('admin.brands.index'),
+                'current' => request()->routeIs('brands.*')
+            ],
+            [
+                'name' => 'Tipos de Productos',
+                'icon' => 'clipboard-document-list',
+                'url'  => route('admin.category_schedules.index'),
+                'current' => request()->routeIs('category_schedules.*')
+            ],
         ],
     ];
 
-    
+
 ?>
 
 

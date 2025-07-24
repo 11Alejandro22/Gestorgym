@@ -1,6 +1,4 @@
 
-
-
 <x-layouts.app>
     <div class="mb-4 flex justify-between items-center">
         <flux:breadcrumbs>
@@ -8,18 +6,17 @@
                 Dashboard
             </flux:breadcrumbs.item>
             <flux:breadcrumbs.item>
-                Categorias
+                Marcas
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
-        
     </div>
 
-    <flux:heading class="mb-6 mt-6" size="xl">Lista de Categorias</flux:heading>
+    <flux:heading class="mb-6 mt-6 ml-6" size="xl">Lista de Marcas</flux:heading>
     <flux:separator class="mb-4"/>
 
     <div class="mb-4 flex justify-end items-center">
-        <flux:button variant="primary" as="a" href="{{route('admin.categories.create')}}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
+        <flux:button variant="primary" as="a" href="{{route('admin.brands.create')}}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
             Nuevo
         </flux:button>
     </div>
@@ -35,9 +32,6 @@
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Precio
-                    </th>
-                    <th scope="col" class="px-6 py-3">
                         Estado
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
@@ -49,13 +43,13 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach ($categories as $category)
-                @livewire('admin.category-row', ['category' => $category], key($category->id))
+            @foreach ($brands as $brand)
+                @livewire('admin.brand-row', ['brand' => $brand], key($brand->id))
             @endforeach
             </tbody>
         </table>
             <div class="mt-4">
-                {{ $categories->links()}}
+                {{ $brands->links()}}
             </div>
     </div>
 

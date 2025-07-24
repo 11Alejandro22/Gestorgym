@@ -8,13 +8,18 @@
                     Horarios
                 </flux:breadcrumbs.item>
             </flux:breadcrumbs>
+        </div>
 
+        <flux:heading class="mb-6 mt-6" size="xl">Horarios de Entreno</flux:heading>
+        <flux:separator class="mb-4"/>
+
+        <div class="mb-4 flex justify-end items-center">
             <flux:button variant="primary" as="a" href="{{route('admin.category_schedules.create')}}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
                 Nuevo Horario
             </flux:button>
         </div>
 
-        <div class="bg-gray px-6 py-8 shadow-lg rounded-lg space-y-6">
+        <div class="bg-gray px-6 py-4 shadow-lg rounded-lg space-y-6">
             
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

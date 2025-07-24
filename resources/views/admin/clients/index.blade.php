@@ -8,11 +8,8 @@
                 Clientes
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
-        
-        
-        
     </div>
-    <flux:heading class="mb-4 mt-6" size="xl">Clientes</flux:heading>
+    <flux:heading class="mb-6 mt-6" size="xl">Clientes</flux:heading>
     <flux:separator class="mb-4"/>
 
     <div class="mb-4 flex justify-end items-center">

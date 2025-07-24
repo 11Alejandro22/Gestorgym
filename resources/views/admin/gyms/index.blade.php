@@ -8,6 +8,9 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
+        <flux:heading class="mb-6 mt-6 ml-6" size="xl">Gimnasio</flux:heading>
+        <flux:separator class="mb-4"/>
+
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg space-y-6">
             
                 <flux:fieldset>
