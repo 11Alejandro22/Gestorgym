@@ -227,7 +227,6 @@ class ClientController extends Controller
         foreach ($data['category_schedules'] as $scheduleId) {
             $syncData[$scheduleId] = [
                 'enrollment_date' => $currentSchedules[$scheduleId] ?? now(),
-                'status_id' => 1,
             ];
         }
 
@@ -270,7 +269,6 @@ class ClientController extends Controller
         ->get();
 
         $installment = Installment::where('client_id', $client->id)
-        ->whereDate('due_date', '>=', now())
         ->orderBy('due_date', 'asc')
         ->first();
 
@@ -336,14 +334,12 @@ class ClientController extends Controller
 
 
         $installment = Installment::where('client_id', $client->id)
-        ->whereDate('due_date', '>=', now())
         ->orderBy('due_date', 'asc')
         ->first();
 
 
         $paymentMethodId = (int)$validated['payment_method_id'];
         
-        // Lógica para Efectivo (ID = 1)
         
 
         $payment = Payment::create([
@@ -359,7 +355,8 @@ class ClientController extends Controller
 
         $nuevoVencimiento = now()->addDays(30);
 
-        $installment->due_date = $nuevoVencimiento->toDateString();
+        $installment->status_id = 1;
+        $installment->due_date  = $nuevoVencimiento->toDateString();
         $installment->save();
 
         session()->flash('swal', [

@@ -7,34 +7,16 @@ use Illuminate\Console\Command;
 
 class ActualizarEstadoCuotas extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'cuotas:actualizar';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+    protected $description = 'Actualiza el estado de las cuotas vencidas a adeudando.';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
-        // Buscar cuotas vencidas y activas
-        $cuotas = Installment::where('status_id', '!=', 3) // que no estén canceladas
+        $cantidad = Installment::where('status_id', '!=', 3)
             ->where('due_date', '<', now())
-            ->get();
+            ->update(['status_id' => 2]);
 
-        foreach ($cuotas as $cuota) {
-            $cuota->update(['status_id' => 2]); // 2 = adeudando
-        }
-
-        $this->info('Cuotas vencidas actualizadas correctamente.');
+        $this->info("Se actualizaron $cantidad cuotas vencidas.");
     }
 }

@@ -31,4 +31,9 @@ class Gym extends Model
     {
         return $this->hasMany(Brand::class);
     }
+
+    public function product_types()
+    {
+        return $this->hasMany(Product_type::class);
+    }
 }

@@ -17,8 +17,8 @@
             [
                 'name' => 'Suplementos',
                 'icon' => 'beaker',
-                'url'  => route('admin.brands.index'),
-                'current' => request()->routeIs('brands.*')
+                'url'  => route('admin.products.index'),
+                'current' => request()->routeIs('products.*')
             ],
         ],
     ];
@@ -58,8 +58,8 @@
             [
                 'name' => 'Tipos de Productos',
                 'icon' => 'clipboard-document-list',
-                'url'  => route('admin.category_schedules.index'),
-                'current' => request()->routeIs('category_schedules.*')
+                'url'  => route('admin.product_types.index'),
+                'current' => request()->routeIs('product_types.*')
             ],
         ],
     ];
