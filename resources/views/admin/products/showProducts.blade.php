@@ -4,6 +4,9 @@
             <flux:breadcrumbs.item :href="route('dashboard')">
                 Dashboard
             </flux:breadcrumbs.item>
+            <flux:breadcrumbs.item :href="route('admin.products.index')">
+                Productos
+            </flux:breadcrumbs.item>
             <flux:breadcrumbs.item>
                 Gestión de Productos
             </flux:breadcrumbs.item>
@@ -15,80 +18,77 @@
     <flux:separator class="mb-4"/>
 
     <div class="mb-4 flex justify-end items-center">
-        <flux:button variant="primary" as="a" href="" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
-            Nuevo
-        </flux:button>
+        <flux:modal.trigger name="create_product">
+            <flux:button variant="primary" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
+                Nuevo
+            </flux:button>
+        </flux:modal.trigger>
+    </div>
+    
+
+    @livewire('admin.manage-products')
+
+    
+    <div class="space-y-6">
+        <flux:modal name="create_product" class="min-w-[450px] max-w-[900px] w-full mb-8">
+            <form action="{{route('admin.products.store')}}" method="POST" class="space-y-6" enctype="multipart/form-data">
+                @csrf
+
+                <div class="relative w-full h-95 flex justify-center items-center mt-4">
+                    <img 
+                        src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" 
+                        alt="Imagen del producto"
+                        class="w-80 h-95 aspect-video object-cover object-center rounded"
+                        id="imgPreview"
+                    />
+                    <div class="absolute top-4 right-2">
+                        <label for="image" class="cursor-pointer bg-gray-600 text-white p-2 rounded dark:bg-gray-600">
+                            Subir Imagen
+                            <input type="file" id="image" name="image" accept="image/*" class="hidden"  onchange="previewImage(event, '#imgPreview')">
+                        </label>
+                    </div>
+                </div>
+
+                <flux:input label="Nombre" name="name" value="{{old('name')}}" placeholder="Escribe el nombre de la marca"></flux:imput>
+
+                <flux:input label="Precio (unitario)" icon="currency-dollar" type="number" name="price" value="{{ old('price') }}" placeholder="$999.99" />
+
+                <flux:select label="Tipo de Producto" wire:model="industry" name="product_type_id" placeholder="Seleccione un Tipo...">
+                    @foreach ($product_types as $product_type)
+                        <option value="{{ $product_type->id }}"
+                            {{ old('product_type_id') ==  $product_type->id ? 'selected' : '' }}>
+                            {{ $product_type->name }}
+                        </option>
+                    @endforeach
+                </flux:select>
+
+                <flux:select label="Marca" wire:model="industry" name="brand_id" placeholder="Seleccione una Marca...">
+                    @foreach ($brands as $brand)
+                        <option value="{{ $brand->id }}"
+                            {{ old('brand_id') ==  $brand->id ? 'selected' : '' }}>
+                            {{ $brand->name }}
+                        </option>
+                    @endforeach
+                </flux:select>
+                
+                <flux:textarea
+                    label="Descripción (Opcional)"
+                    name="description"
+                    value="{{old('description')}}"
+                    placeholder="Escriba una descripción"
+                />
+
+                <div class="flex">
+                    <flux:spacer />
+                    <flux:button type="submit" class="cursor-pointer" variant="primary">Guardar</flux:button>
+                </div>
+            </form>
+        </flux:modal>
     </div>
 
-    <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Producto
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Marca
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Tipo de Producto
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Estado
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Cambiar Estado
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center" width="10px">
-                        Edit
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($products as $product)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                        <th scope="row" class="px-6 py-4 font-medium text-1xl text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $product->name}}
-                        </th>
-                        <td class="px-6 py-4 font-medium text-1xl">
-                            {{ $product->brand->name }}
-                        </td>
-                        <td class="px-6 py-4 font-medium text-1xl">
-                            {{ $product->productType->name }}
-                        </td>
-                        <td class="w-40 px-4 py-4 font-medium text-1xl">
-                            <flux:badge variant="solid" color="{{ $product->is_active ? 'green' : 'red' }}">
-                                {{ $product->is_active ? 'Activo' : 'Desactivado' }}
-                            </flux:badge>
-                        </td>
-                        <td class="px-6 py-4 font-medium text-1xl flex justify-center items-center">
-                            <flux:button 
-                                icon="arrow-path-rounded-square"
-                                type="checkbox"
-                                wire:click="toggle"
-                                :checked="$product->is_active"
-                                class="cursor-pointer"></flux:button>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex space-x-2">
-                                <flux:button variant="primary" color="blue" as="a" href="{{ route('admin.products.edit', $product) }}">
-                                    Editar
-                                </flux:button>
-                                <form class="delete-form" action="{{ route('admin.products.destroy', $product->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <flux:button variant="danger" class="cursor-pointer" type="submit">Eliminar</flux:button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-            {{-- <div class="mt-4">
-                {{ $product_types->links()}}
-            </div> --}}
-    </div>
+    
+    
+    
 
     @push('js')
         <script>

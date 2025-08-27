@@ -13,7 +13,7 @@
         </flux:breadcrumbs>
 
         <flux:heading class="mb-4 mt-6" size="xl">Modificación de Cliente</flux:heading>
-        <flux:separator/>
+        <flux:separator class="border-lime-500 border-1"/>
 
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg">
 

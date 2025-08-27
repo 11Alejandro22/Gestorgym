@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProductRow extends Component
 {
-    public $first_name = ''; // nombre del producto
-    public $brand_id = '';
+    public $first_name      = ''; // nombre del producto
+    public $brand_id        = '';
     public $product_type_id = '';
 
     public function render()

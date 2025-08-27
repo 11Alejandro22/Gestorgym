@@ -1,4 +1,3 @@
-
 <x-layouts.app>
     <div class="mb-4 flex justify-between items-center">
         <flux:breadcrumbs>
@@ -6,27 +5,39 @@
                 Dashboard
             </flux:breadcrumbs.item>
             <flux:breadcrumbs.item>
-                Producto
+                Venta
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
-
     </div>
 
-    <flux:heading class="mb-6 mt-6" size="xl">Productos</flux:heading>
+    <flux:heading class="mb-6 mt-6" size="xl">Facturación</flux:heading>
     <flux:separator class="mb-4 border-lime-500 border-1"/>
 
-    <div class="mb-4 flex justify-end items-center">
-        <flux:button variant="primary" as="a" href="{{ route('admin.products.showProducts.table') }}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
-            Gestionar Productos
-        </flux:button>
+    <div class="bg-black-700 py-4 rounded-lg grid gap-4 grid-cols-3">
+            <div>
+                <label>Fecha</label>
+                <flux:input class="mb-4 py-2 hover:none" wire:model="stock" type="text" value="{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}"  placeholder="" readonly ></flux:input>
+            </div>
+
+            <div>
+                <label>N° Factura</label>
+                <flux:input class="mb-4 py-2" wire:model="stock" readonly 
+                    value="{{ $lastInvoiceNumber->invoice_number ?? 0 }}">
+                </flux:input>
+            </div>
+
+            <div>
+                <label>Cliente</label>
+                <flux:input class="mb-4 py-2" wire:model="price" placeholder="Consumidor Final" readonly value="Consumidor Final"></flux:input>
+            </div>
     </div>
 
-    @livewire('admin.product-row')
+    @livewire('admin.invoice-form')
 
-    
 
     @push('js')
         <script>
+            
             forms = document.querySelectorAll('.delete-form');
 
             forms.forEach(form => {

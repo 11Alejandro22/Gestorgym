@@ -36,7 +36,6 @@ class ProductController extends Controller
                     ->where('is_active', 1)
                     ->orderBy('id', 'desc')
                     ->get();
-
         return view('admin.products.create', compact('brands', 'product_types'));
     }
 
@@ -51,7 +50,6 @@ class ProductController extends Controller
             'name'              => 'required|string|max:255|min:3',
             'description'       => 'nullable|max:300',
             'price'             => 'required|numeric|min:1',
-            'stock'             => 'required|numeric|min:1',
             'product_type_id'   => 'required|numeric',
             'brand_id'          => 'required|numeric',
             'image'             => 'nullable|image',
@@ -63,6 +61,7 @@ class ProductController extends Controller
 
         $data['gym_id']     = $user->gym_id;
         $data['is_active']  = 1;
+        $data['stock']      = 0;
 
         Product::create($data);
 
@@ -72,7 +71,7 @@ class ProductController extends Controller
             'icon'  => 'success',
         ]);
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('admin.products.showProducts.table');
 
     }
 
@@ -89,12 +88,22 @@ class ProductController extends Controller
     {
         $user = auth('web')->user();
 
-        $products = $products = Product::with(['brand', 'productType', 'gym'])
+        $brands = Brand::where('gym_id', $user->gym_id)
+                    ->where('is_active', 1)
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+        $product_types = Product_type::where('gym_id', $user->gym_id)
+                    ->where('is_active', 1)
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+        $products = Product::with(['brand', 'productType', 'gym'])
                                 ->where('gym_id', $user->gym_id)
                                 ->where('is_active', 1)
                                 ->get();
 
-        return view('admin.products.showProducts', compact('products'));
+        return view('admin.products.showProducts', compact('products', 'brands', 'product_types'));
     }
 
     /**
@@ -102,7 +111,19 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $user = auth('web')->user();
+
+        $brands = Brand::where('gym_id', $user->gym_id)
+                    ->where('is_active', 1)
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+        $product_types = Product_type::where('gym_id', $user->gym_id)
+                    ->where('is_active', 1)
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+        return view('admin.products.edit', compact('product', 'product_types', 'brands'));
     }
 
     /**
@@ -110,7 +131,36 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $user = auth('web')->user();
+
+        $data = $request->validate([
+            'name'              => 'required|string|max:255|min:3',
+            'description'       => 'nullable|max:300',
+            'price'             => 'required|numeric|min:1',
+            'product_type_id'   => 'required|numeric',
+            'brand_id'          => 'required|numeric',
+            'image'             => 'nullable|image',
+        ]);
+
+        if($request->hasFile('image')){
+            if($product->image){
+                Storage::delete($product->image);
+            }
+            $data['image'] = Storage::put('Producto', $request->image);
+        }
+
+        $data['gym_id']     = $user->gym_id;
+        $data['is_active']  = 1;
+
+        $product->update($data);
+
+        session()->flash('swal', [
+            'text'  => 'El producto se ha actualizado correctamente.',
+            'title' => '¡Bien hecho!',
+            'icon'  => 'success',
+        ]);
+
+        return redirect()->route('admin.products.showProducts.table');
     }
 
     /**

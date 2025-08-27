@@ -1,5 +1,5 @@
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
     <div class="mb-4 p-2 flex justify-center items-center space-x-4">
         <flux:input 
             wire:model.live.debounce.500ms="first_name" 
@@ -22,13 +22,13 @@
         /> 
         
         <flux:select wire:model.live="is_active" placeholder="Seleccione un estado">
-            <flux:select.option value="">Todos</flux:select.option>
+            <flux:select.option value="">Todos los Estados</flux:select.option>
             <flux:select.option value="1">Activos</flux:select.option>
             <flux:select.option value="0">Baja</flux:select.option>
         </flux:select>
     </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+        <thead class="text-xs text-gray-800 uppercase bg-lime-500 dark:bg-lime-700 dark:text-gray-100">
             <tr>
                 <th scope="col" class="px-6 py-3">ID</th>
                 <th scope="col" class="px-6 py-3">Nombre y Apellido</th>

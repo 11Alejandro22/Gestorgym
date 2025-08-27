@@ -353,10 +353,12 @@ class ClientController extends Controller
             'gateway_status_detail'   => null,
         ]);
 
-        $nuevoVencimiento = now()->addDays(30);
+        
+        $FechaVencimiento = Carbon::parse($installment->due_date);
+        $nuevoVencimiento = $FechaVencimiento->addDays(30)->toDateString();
 
         $installment->status_id = 1;
-        $installment->due_date  = $nuevoVencimiento->toDateString();
+        $installment->due_date  = $nuevoVencimiento;
         $installment->save();
 
         session()->flash('swal', [

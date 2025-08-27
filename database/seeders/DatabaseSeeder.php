@@ -26,13 +26,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('Lhumos1234')
         ]);
 
-        // Gym::factory(5)->create()->each(function ($gym) {
-        //     $gym->categories()->saveMany(
-        //     Category::factory(5)->make()
-        // );
-        // });
-
-        
+        //Dias de la semana
         $daysOfWeek = [
             'Lunes',
             'Martes',
@@ -49,6 +43,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        //Estados de Mensualidad
         $statuses = [
             'Al día',
             'Adeudando',
@@ -60,6 +55,8 @@ class DatabaseSeeder extends Seeder
                 'name' => $status,
             ]);
         }
+
+        
     }
 }
 

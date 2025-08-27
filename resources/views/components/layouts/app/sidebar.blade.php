@@ -9,16 +9,34 @@
                 'current' => request()->routeIs('dashboard')
             ],
             [
+                'name' => 'Venta',
+                'icon' => 'shopping-cart',
+                'url'  => route('admin.invoices.index'),
+                'current' => request()->routeIs('invoices.*')
+            ],
+            [
                 'name' => 'Clientes',
                 'icon' => 'users',
                 'url'  => route('admin.clients.index'),
                 'current' => request()->routeIs('clients.*')
             ],
             [
-                'name' => 'Suplementos',
+                'name' => 'Productos',
                 'icon' => 'beaker',
                 'url'  => route('admin.products.index'),
                 'current' => request()->routeIs('products.*')
+            ],
+            [
+                'name' => 'Compra',
+                'icon' => 'inbox-arrow-down',
+                'url'  => route('admin.purchases.index'),
+                'current' => request()->routeIs('purchases.*')
+            ],
+            [
+                'name' => 'Proveedores',
+                'icon' => 'truck',
+                'url'  => route('admin.suppliers.index'),
+                'current' => request()->routeIs('suppliers.*')
             ],
         ],
     ];

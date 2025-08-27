@@ -4,8 +4,8 @@
             <flux:breadcrumbs.item :href="route('dashboard')">
                 Dashboard
             </flux:breadcrumbs.item>
-            <flux:breadcrumbs.item :href="route('admin.brands.index')">
-                Marca
+            <flux:breadcrumbs.item :href="route('admin.products.showProducts.table')">
+                Gestión de Producto
             </flux:breadcrumbs.item>
             <flux:breadcrumbs.item>
                 Editar 
@@ -16,25 +16,61 @@
         <flux:separator class="mb-4"/>
 
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg">
-
-            <form action="{{route('admin.brands.update', $brand)}}" method="POST" class="space-y-6">
+            <form action="{{route('admin.products.update', $product)}}" method="POST" class="space-y-6" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                <flux:input label="Nombre" name="name" value="{{old('name', $brand->name)}}" placeholder="Escribe el nombre de la marca"></flux:imput>
+                <div class="relative w-80 h-95">
+                    <img 
+                        src="{{ $product->image ? Storage::url($product->image) : 'https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg'}} " 
+                        alt="Imagen del producto"
+                        class="w-80 h-95 aspect-video object-cover object-center rounded"
+                        id="imgPreview"
+                    />
+                    <div class="absolute top-4 right-2">
+                        <label for="image" class="cursor-pointer bg-gray-600 text-white p-2 rounded dark:bg-gray-600">
+                            Subir Imagen
+                            <input type="file" id="image" name="image" accept="image/*" class="hidden"  onchange="previewImage(event, '#imgPreview')">
+                        </label>
+                    </div>
+                </div>
 
-                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
-                <textarea id="message" rows="4" name="description" value="{{ old('description', $brand->description )}}"  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $brand->description }}</textarea>
+                <flux:input label="Nombre" name="name" value="{{old('name', $product->name)}}" placeholder="Escribe el nombre de la marca"></flux:imput>
 
-                <div class="flex justify-end mt-4">
-                    <flux:button variant="primary" type="submit" class="cursor-pointer">
-                        Enviar
-                    </flux:button>
+                <flux:input label="Precio (unitario)" icon="currency-dollar" type="number" name="price" value="{{ old('price', $product->price) }}" placeholder="$999.99" />
+
+                <flux:select label="Tipo de Producto" wire:model="industry" name="product_type_id" placeholder="Seleccione un Tipo...">
+                    @foreach ($product_types as $product_type)
+                        <option value="{{ $product_type->id }}"
+                            {{ old('product_type_id',$product_type->id) ==  $product_type->id ? 'selected' : '' }}>
+                            {{ $product_type->name }}
+                        </option>
+                    @endforeach
+                </flux:select>
+
+                <flux:select label="Marca" wire:model="industry" name="brand_id" placeholder="Seleccione una Marca...">
+                    @foreach ($brands as $brand)
+                        <option value="{{ $brand->id }}"
+                            {{ old('brand_id', $brand->id) ==  $brand->id ? 'selected' : '' }}>
+                            {{ $brand->name }}
+                        </option>
+                    @endforeach
+                </flux:select>
+                
+                <flux:textarea
+                    label="Descripción (Opcional)"
+                    name="description"
+                    value="{{old('description')}}"
+                    placeholder="Escriba una descripción">
+                    {{ $product->description }}
+                </flux:textarea>
+
+                <div class="flex">
+                    <flux:spacer />
+                    <flux:button type="submit" class="cursor-pointer" variant="primary">Guardar</flux:button>
                 </div>
             </form>
 
         </div>
 
-
-        
 </x-layouts.app>

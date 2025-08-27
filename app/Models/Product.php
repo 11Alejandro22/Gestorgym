@@ -32,4 +32,9 @@ class Product extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+
+    public function purchaseDetail()
+    {
+        return $this->hasMany(PurchaseDetail::class);
+    }
 }

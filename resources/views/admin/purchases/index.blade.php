@@ -1,4 +1,3 @@
-
 <x-layouts.app>
     <div class="mb-4 flex justify-between items-center">
         <flux:breadcrumbs>
@@ -6,24 +5,21 @@
                 Dashboard
             </flux:breadcrumbs.item>
             <flux:breadcrumbs.item>
-                Producto
+                Compra
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
-
     </div>
 
-    <flux:heading class="mb-6 mt-6" size="xl">Productos</flux:heading>
+    <flux:heading class="mb-6 mt-6" size="xl">Lista de Compras</flux:heading>
     <flux:separator class="mb-4 border-lime-500 border-1"/>
 
     <div class="mb-4 flex justify-end items-center">
-        <flux:button variant="primary" as="a" href="{{ route('admin.products.showProducts.table') }}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
-            Gestionar Productos
+        <flux:button variant="primary" as="a" href="{{route('admin.purchases.create')}}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
+            Nueva Compra
         </flux:button>
     </div>
 
-    @livewire('admin.product-row')
-
-    
+    @livewire('admin.purchase-row')
 
     @push('js')
         <script>

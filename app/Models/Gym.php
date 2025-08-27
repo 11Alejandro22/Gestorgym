@@ -36,4 +36,14 @@ class Gym extends Model
     {
         return $this->hasMany(Product_type::class);
     }
+
+    public function supplier()
+    {
+        return $this->hasMany(Supplier::class);
+    }
+
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
