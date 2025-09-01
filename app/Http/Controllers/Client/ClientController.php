@@ -316,7 +316,10 @@ class ClientController extends Controller
     public function storeMonthlyPayment(Request $request, Client $client)
     {
         $validated = $request->validate([
-            'payment_method_id'   => 'required|exists:payment_methods,id',
+        'payment_method_id' => 'required|exists:payment_methods,id',
+        ], [
+            'payment_method_id.required' => 'Seleccione un método de pago.',
+            'payment_method_id.exists' => 'Seleccione un método de pago válido.',
         ]);
 
         $category_schedules = category_schedule::with([

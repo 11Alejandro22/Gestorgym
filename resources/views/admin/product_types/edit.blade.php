@@ -12,8 +12,9 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
-        <flux:heading class="mb-6 mt-6 ml-6" size="xl">Edición de Tipo de Producto</flux:heading>
-        <flux:separator class="mb-4"/>
+        <flux:heading class="mb-6 mt-6" size="xl">Editar Tipo de Producto</flux:heading>
+        <flux:text class="mb-6 mt-2 text-base">Edite los datos del Tipo de Producto</flux:text>
+        <flux:separator class="mb-4 border-lime-500 border-1"/>
 
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg">
 

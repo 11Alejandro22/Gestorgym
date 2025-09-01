@@ -40,6 +40,17 @@
             ],
         ],
     ];
+    
+    $reports = [
+        'Reportes' => [
+            [
+                'name' => 'Clientes',
+                'icon' => 'home',
+                'url'  => route('dashboard'),
+                'current' => request()->routeIs('dashboard')
+            ],
+        ],
+    ];
 
     $sistems = [
         'Sistema' => [
@@ -112,7 +123,20 @@
                     </flux:navlist.group>
                     
                 @endforeach
+                
+                <flux:navlist.group variant="outline" heading="Reportes" expandable :expanded="false">
+                    @foreach ($reports as $report => $links)
+                        <flux:navlist.group class="grid mb-2 mt-2 cursor-pointer">
+                            @foreach ($links as $link)
+                                <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate>{{ $link['name'] }}</flux:navlist.item>
+                            @endforeach
+                        </flux:navlist.group>
+                    @endforeach
+                    
+                </flux:navlist.group>
             </flux:navlist>
+
+
 
             <flux:navlist.group heading="Config" class="grid">
                 <flux:navlist.group variant="outline" heading="Sistema" expandable :expanded="false">

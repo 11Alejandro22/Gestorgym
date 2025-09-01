@@ -4,6 +4,8 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Client;
+use App\Models\Installment;
+use Carbon\Carbon;
 
 class ClientsIndex extends Component
 {
@@ -37,13 +39,28 @@ class ClientsIndex extends Component
         ]);
     }
 
-
     public function toggleIsActive($clientId)
     {
         $client = Client::findOrFail($clientId);
 
+        // Cambiar estado del cliente
         $client->is_active = !$client->is_active;
         $client->save();
+
+        // Obtener todas las cuotas asociadas
+        $installments = Installment::where('client_id', $clientId)->get();
+
+        foreach ($installments as $installment) {
+            if ($client->is_active) {
+                // Reactivar cliente -> status_id = 1 y due_date = hoy + 30 días
+                $installment->status_id = 1;
+                $installment->due_date = Carbon::now()->addDays(30);
+            } else {
+                // Desactivar cliente -> status_id = 3
+                $installment->status_id = 3;
+            }
+            $installment->save();
+        }
     }
 }
 

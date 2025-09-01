@@ -50,7 +50,9 @@ class GymController extends Controller
 
         $gym = Gym::create($data);
 
+        /** @var \App\Models\User $user */
         $user = auth('web')->user();
+
         $user->gym_id = $gym->id; 
         $user->save();
 
@@ -77,7 +79,7 @@ class GymController extends Controller
      */
     public function edit(Gym $gym)
     {
-        //
+        return view('admin.gyms.edit', compact('gym'));
     }
 
     /**
@@ -85,7 +87,30 @@ class GymController extends Controller
      */
     public function update(Request $request, Gym $gym)
     {
-        //
+        $data = $request->validate([
+            'name'    => 'required|string|max:255|min:3',
+            'address' => 'required|string|max:255|min:3',
+            'email'   => 'required|email|unique:gyms,email,' . $gym->id,
+            'phone'   => 'required'
+        ]);
+
+        $data['slug'] = Str::slug($data['name']);
+
+        // Actualizar en lugar de crear
+        $gym->update($data);
+
+        /** @var \App\Models\User $user */
+        $user = auth('web')->user();
+        $user->gym_id = $gym->id; 
+        $user->save();
+
+        session()->flash('swal', [
+            'text'  => 'El Gimnasio se ha editado correctamente.',
+            'title' => '¡Bien hecho!',
+            'icon'  => 'success',
+        ]);
+
+        return redirect()->route('admin.gyms.index');
     }
 
     /**

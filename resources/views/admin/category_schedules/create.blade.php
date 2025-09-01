@@ -12,6 +12,9 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
+        <flux:heading class="mb-6 mt-6" size="xl">Nuevo Entrenador</flux:heading>
+        <flux:separator class="mb-4 border-lime-500 border-1"/>
+
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg">
 
             <form action="{{route('admin.category_schedules.store')}}" method="POST" class="space-y-6">

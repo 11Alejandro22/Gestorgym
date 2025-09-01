@@ -12,6 +12,10 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
+        <flux:heading class="mb-6 mt-6" size="xl">Editar Horario</flux:heading>
+        <flux:text class="mb-6 mt-2 text-base">Edite los datos del Horario</flux:text>
+        <flux:separator class="mb-4 border-lime-500 border-1"/>
+
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg">
 
             <form action="{{route('admin.category_schedules.update', $category_schedule) }}" method="POST" class="space-y-6">

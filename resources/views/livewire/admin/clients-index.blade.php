@@ -98,7 +98,9 @@
                                 x-data=""
                                 x-on:click="Swal.fire({
                                     title: '¿Estás seguro?',
-                                    text: '¡Esto cambiará el estado!',
+                                    text: '{{ $result->is_active 
+                                        ? 'Esto dará de baja al Cliente.' 
+                                        : 'Esto reactivará al Cliente y actualizará la fecha de vencimiento para dentro de 30 dias.' }}',
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonText: 'Sí, cambiar',

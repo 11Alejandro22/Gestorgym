@@ -11,8 +11,11 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
+        <flux:heading class="mb-6 mt-6" size="xl">Nuevo Entrenador</flux:heading>
+        <flux:separator class="mb-4 border-lime-500 border-1"/>
+
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg space-y-6">
-            <flux:legend>Datos del Entrenador</flux:legend>
+            
             <form action="{{route('admin.coaches.store')}}" method="POST" class="space-y-6">
                 @csrf
 

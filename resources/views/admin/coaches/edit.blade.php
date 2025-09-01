@@ -11,8 +11,12 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
+        <flux:heading class="mb-6 mt-6" size="xl">Editar Entrenador</flux:heading>
+        <flux:text class="mb-6 mt-2 text-base">Edite los datos del Entrenador</flux:text>
+        <flux:separator class="mb-4 border-lime-500 border-1"/>
+
         <div class="bg-gray px-6 py-8 shadow-lg rounded-lg space-y-6">
-            <flux:legend>Editar datos del Entrenador</flux:legend>
+            
             <form action="{{route('admin.coaches.update', $coach)}}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')

@@ -11,7 +11,7 @@
     </div>
 
     <flux:heading class="mb-6 mt-6" size="xl">Entrenadores</flux:heading>
-    <flux:separator class="mb-4"/>
+    <flux:separator class="mb-4 border-lime-500 border-1"/>
 
     <div class="mb-4 flex justify-end items-center">
         <flux:button variant="primary" as="a" href="{{route('admin.coaches.create')}}" class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition cursor-pointer">
@@ -22,7 +22,7 @@
         <div class="bg-gray px-6 py-2 shadow-lg rounded-lg space-y-6">
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-800 uppercase bg-lime-500 dark:bg-lime-700 dark:text-gray-100">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 Perfil

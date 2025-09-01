@@ -16,80 +16,96 @@
 
 
 
-        <div 
-            class="bg-gray px-6 py-8 shadow-lg rounded-lg"
-        >
+        <div class="bg-gray px-6 py-8 shadow-lg rounded-lg">
             
             <flux:heading class="mb-6" size="xl">Pago de Mensualidad</flux:heading>
             <div class="w-80 mt-4 mb-6">
-                <flux:text size="xl">Cliente: {{$client->person->first_name}} {{$client->person->last_name}} </flux:text>
+                <flux:text size="xl" class="mb-4">Cliente: {{$client->person->first_name}} {{$client->person->last_name}} </flux:text>
+
+                <flux:text size="xl">Vencimiento: {{ $installment->due_date}} </flux:text>
             </div>
 
             <div class="mt-4 relative overflow-x-auto">
-                <table class="w-full text-xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 rounded-s-lg">
-                                Categoría 
-                            </th>
-                            <th scope="col" class="px-6 py-3">
+                
+                <div class="mt-4 relative overflow-x-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded">
+                        <table class="w-full text-xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 rounded-s-lg">
+                                        Categoría 
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 rounded-e-lg">
+                                        Precio
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Vencimiento
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                
-                            </th>
-                            <th scope="col" class="px-6 py-3 rounded-e-lg">
-                                Precio
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                                @foreach ($category_schedules as $category_schedule)
+                                    <tr class="bg-white dark:bg-gray-800">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $category_schedule->category->name }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            ${{ $category_schedule->category->monthly_price }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                
+                        </table>
+                    </div>
+                    <div class="p-4 rounded flex justify-center items-center flex-col border border-lime-400">
+                        <flux:heading size="xl" class="mb-8">Resumen de Pago</flux:heading>
+                        <div class="flex items-center flex-col">
+                            <flux:heading size="xl" class="mb-4">Total</flux:heading>
+                            <flux:heading size="xl" class="mb-1 text-lime-400">${{ number_format($total) }}</flux:heading>
+                        </div>
+                        <div class="mb-4 flex justify-end items-center">
+                            <flux:button
+                                variant="primary"
+                                icon="banknotes"
+                                as="button"
+                                data-modal-target="crud-modal"
+                                data-modal-toggle="crud-modal"
+                                class="flex items-center gap-2 px-4 py-2 mt-4 bg-green-700 text-white rounded hover:bg-green-900 transition cursor-pointer"
+                            >
+                                Pagar
+                            </flux:button>
+                        </div>
                         
-                        @foreach ($category_schedules as $category_schedule)
-                            <tr class="bg-white dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $category_schedule->category->name }}
-                                </th>
-                                <td class="px-6 py-4">
-                                    
-                                </td>
-                                <td class="px-6 py-4">
-                                    
-                                </td>
-                                <td class="px-6 py-4">
-                                    
-                                </td>
-                                <td class="px-6 py-4">
-                                    ${{ $category_schedule->category->monthly_price }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="font-semibold text-gray-900 dark:text-white">
-                            <th scope="row" class="px-6 py-3 text-xl">Total</th>
-                            <td class="px-6 py-3"></td>
-                            <td class="px-6 py-3">{{ $installment->due_date}}</td>
-                            <td class="px-6 py-3"></td>
-                            <td class="px-6 py-3">$ {{ number_format($total) }}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="mb-4 flex justify-end items-center">
-                <flux:button
-                    variant="primary"
-                    icon="banknotes"
-                    as="button"
-                    data-modal-target="crud-modal"
-                    data-modal-toggle="crud-modal"
-                    class="flex items-center gap-2 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-900 transition cursor-pointer"
-                >
-                    Pagar
-                </flux:button>
+                    </div>
+                </div>
+                @if ($errors->has('payment_method_id'))
+                    <div class="flex justify-center items-center p-4 mb-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                        </svg>
+                        <span class="sr-only">Error</span>
+                        <div>
+                            <span class="font-medium">Error:</span> {{ $errors->first('payment_method_id') }}
+                        </div>
+                    </div>
+                @endif
             </div>
 
             
